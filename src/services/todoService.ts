@@ -1,43 +1,34 @@
-interface TodoList {
-    id: number;
-    title: string;
-}
-
-interface Todo {
-    id: number;
-    title: string;
-    description: string;
-    isCompleted: boolean;
-}
+import { Task, default as TaskModel} from '../models/Task';
+import { TodoList, default as TodoListModel } from '../models/TodoList';
 
 class TodoService {
 
-    createTodoList(title: string): TodoList {
-        // TODO: Implement create todo list
+    createTodoList(title: string, userId: number): TodoList {
+        return TodoListModel.createTodoList(title, userId);
     }
 
-    addTodo(listId: string, title: string, description: string): Todo | null {
-        // TODO: Implement add todo
+    addTodo(listId: string, title: string, description: string, userId: number): Task | null {
+        return TaskModel.createTask(title, description, userId);
     }
 
-    getTodoLists(): TodoList[] {
-        // TODO: Implement get todo lists
+    getTodoLists(userId: number): TodoList[] {
+        return TodoListModel.getTodoLists();
     }
 
-    getTodos(listId: string): Todo[] {
-        // TODO: Implement get todo list by id
+    getTodos(listId: number): Task[] {
+        return TaskModel.getTasks(listId);
     }
 
-    updateTodoList(listId: string, title: string): TodoList {
-        // TODO: Implement update todo list
+    updateTodoList(listId: number, title: string): TodoList {
+        return TodoListModel.updateTodoList(listId, title);
     }
 
-    deleteTodoList(listId: string): void {
-        // TODO: Implement delete todo list
+    deleteTodoList(listId: number): void {
+        TodoListModel.deleteTodoList(listId);
     }
 
-    generateTodoListURL(listId: string): string {
-        // TODO: Implement generate todo list url
+    generateTodoListURL(listId: number): string {
+        return TodoListModel.generateTodoListURL(listId);
     }
     
 }

@@ -1,30 +1,34 @@
 import { pool } from '../config/database';
 
-interface User {
+export interface User {
     id: number;
     username: string;
-    password: string;
+    password: string | null;
 }
 
 class UserModel {
-    createUser(username: string, password: string): User {
+    async createUser(username: string, password: string): Promise<User | null> {
         // TODO: Implement create user
     }
 
-    getUserById(id: number): User {
+    async getUserById(id: number): Promise<User | null> {
         // TODO: Implement get user by id
     }
 
-    getUserByUsername(username: string): User {
+    async getUserByUsername(username: string): Promise<User | null> {
         // TODO: Implement get user by username
     }
 
-    updateUser(id: number, username: string, password: string): User {
+    async updateUser(id: number, username: string, password: string): Promise<User | null> {
         // TODO: Implement update user
     }
 
-    deleteUser(id: number): void {
+    async deleteUser(id: number): Promise<boolean> {
         // TODO: Implement delete user
+    }
+
+    async checkPassword(username: string, password: string): Promise<boolean> {
+        // TODO: Implement check password
     }
 }
 
