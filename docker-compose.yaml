@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_DB: todo
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+  todo-backend:
+    container_name: todo-backend
+    build:
+      context: .  # Build context is the current directory
+    ports:
+      - "3001:3000"
+    environment:
+      PORT: 3000
+      HOST: 0.0.0.0
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: todo
+      JWT_SECRET: secret
+      JWT_EXPIRATION: 3600
+    depends_on:
+      - postgres
+    restart: "no"
+
+  todo-backend-tests:
+    container_name: todo-backend-tests
+    build:
+      context: .  
+    command: "npm run docker:test"
+    depends_on:
+      - todo-backend
+    environment:
+      NODE_ENV: test
+      PORT: 3000
+      HOST: 0.0.0.0
+      POSTGRES_USER: todo
+      POSTGRES_PASSWORD: todo
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DATABASE: todo
+      JWT_SECRET: secret
+      JWT_EXPIRATION: 3600
+    restart: "no"

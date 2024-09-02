@@ -7,6 +7,9 @@ config();
 export const PORT: number = EnvNumber('PORT', 3000);
 export const HOST: string = EnvString('HOST', '0.0.0.0');
 
+export const FRONTEND_HOST: string = EnvString('FRONTEND_HOST', 'localhost');
+export const FRONTEND_PORT: number = EnvNumber('FRONTEND_PORT', 3001);
+
 /** API config */
 export const API: string = EnvString('API', '/api/v1');
 

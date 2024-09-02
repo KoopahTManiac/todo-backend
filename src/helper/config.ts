@@ -1,4 +1,4 @@
-export const validateEnvString = ( variable: string ): string => {
+const getEnvVariable = (variable: string): string => {
     const value = process.env[variable];
 
     if (!value) {
@@ -6,14 +6,14 @@ export const validateEnvString = ( variable: string ): string => {
     }
 
     return value;
-}
+};
 
-export const validateEnvNumber = ( variable: string ): number => {
-    const value = process.env[variable];
-    if (!value) {
-        throw new Error(`${variable} is not set`);
-    }
+export const validateEnvString = (variable: string): string => {
+    return getEnvVariable(variable);
+};
 
+export const validateEnvNumber = (variable: string): number => {
+    const value = getEnvVariable(variable);
     const number = Number(value);
 
     if (Number.isNaN(number)) {
@@ -21,28 +21,24 @@ export const validateEnvNumber = ( variable: string ): number => {
     }
 
     return number;
-}
+};
 
 export const EnvString = (variable: string, defaultValue: string): string => {
+    return process.env[variable] ?? defaultValue;
+};
+
+export const EnvNumber = (variable: string, defaultValue: number): number => {
     const value = process.env[variable];
-
-    return value || defaultValue;
-}
-
-export const EnvNumber = (varName: string, defaultValue: number): number => {
-    const value = process.env[varName];
 
     if (!value) {
         return defaultValue;
     }
 
     const number = Number(value);
-
     if (Number.isNaN(number)) {
-        throw new Error(`${varName} is not a valid number`);
+        throw new Error(`${variable} is not a valid number`);
     }
 
     return number;
-}
-
+};
 
